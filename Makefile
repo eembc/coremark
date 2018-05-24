@@ -1,20 +1,18 @@
-#Author : Shay Gal-On, EEMBC
+# Copyright 2018 Embedded Microprocessor Benchmark Consortium (EEMBC)
 #
-#This file is part of  EEMBC(R) and CoreMark(TM), which are Copyright (C) 2009 
-#All rights reserved.                            
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-#EEMBC CoreMark Software is a product of EEMBC and is provided under the terms of the
-#CoreMark License that is distributed with the official EEMBC COREMARK Software release. 
-#If you received this EEMBC CoreMark Software without the accompanying CoreMark License, 
-#you must discontinue use and download the official release from www.coremark.org.  
+#    http://www.apache.org/licenses/LICENSE-2.0
 #
-#Also, if you are publicly displaying scores generated from the EEMBC CoreMark software, 
-#make sure that you are in compliance with Run and Reporting rules specified in the accompanying readme.txt file.
-#
-#EEMBC 
-#4354 Town Center Blvd. Suite 114-200
-#El Dorado Hills, CA, 95762 
-
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# 
+# Original Author: Shay Gal-on
 
 # Make sure the default target is to simply build and run the benchmark.
 RSTAMP = v1.0
