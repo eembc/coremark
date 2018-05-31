@@ -109,7 +109,7 @@ The default for such a target when testing different configurations could be:
 
 # Submitting Results
 
-CoreMark results can be submitted on the web. Open a web browser and go to http://www.coremark.org/benchmark/index.php?pg=benchmark. Select the link to add a new score and follow the instructions.
+CoreMark results can be submitted on the web. Open a web browser and go to https://www.eembc.org/coremark/login.php?url=enter_score.php. After registering an account you may enter a score.
 
 # Run Rules
 What is and is not allowed.
@@ -375,6 +375,7 @@ Many thanks to all of the individuals who helped with the development or testing
 * Trent Parker, CAVIUM
 * Shay Gal-On, EEMBC
 * Markus Levy, EEMBC
+* Peter Torelli, EEMBC
 * Ron Olson, IBM
 * Eyal Barzilay, MIPS
 * Jens Eltze, NEC
