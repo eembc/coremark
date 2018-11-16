@@ -321,7 +321,7 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 	for (i=0 ; i<default_num_contexts; i++) 
 		ee_printf("[%d]crcfinal      : 0x%04x\n",i,results[i].crc);
 	if (total_errors==0) {
-		ee_printf("Correct operation validated. See readme.txt for run and reporting rules.\n");
+		ee_printf("Correct operation validated. See README.md for run and reporting rules.\n");
 #if HAS_FLOAT
 		if (known_id==3) {
 			ee_printf("CoreMark 1.0 : %f / %s %s",default_num_contexts*results[0].iterations/time_in_secs(total_time),COMPILER_VERSION,COMPILER_FLAGS);

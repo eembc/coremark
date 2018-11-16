@@ -22,7 +22,7 @@ run: $(OUTFILE) rerun score
 
 score:
 	@echo "Check run1.log and run2.log for results."
-	@echo "See readme.txt for run and reporting rules." 
+	@echo "See README.md for run and reporting rules." 
 	
 ifndef PORT_DIR
 # Ports for a couple of common self hosted platforms

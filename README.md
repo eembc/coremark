@@ -205,7 +205,7 @@ seedcrc				: 0xe9f5				(identifier for the input seeds)
 [0]crcmatrix		: 0x1fd7				(validation for matrix part)
 [0]crcstate			: 0x8e3a				(validation for state part)
 [0]crcfinal			: 0x33ff				(iteration dependent output)
-Correct operation validated. See readme.txt for run and reporting rules.  (*Only when run is successful*)
+Correct operation validated. See README.md for run and reporting rules.  (*Only when run is successful*)
 CoreMark 1.0 : 6508.490622 / GCC3.4.4 -O2 / Heap 						  (*Only on a successful performance run*)
 ~~~
 
