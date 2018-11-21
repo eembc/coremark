@@ -26,7 +26,7 @@ score:
 	
 ifndef PORT_DIR
 # Ports for a couple of common self hosted platforms
-UNAME=$(shell if [[ `uname 2> /dev/null` ]] ; then uname ; fi)
+UNAME=$(shell if command -v uname 2> /dev/null; then uname ; fi)
 ifneq (,$(findstring CYGWIN,$(UNAME)))
 PORT_DIR=cygwin
 endif
