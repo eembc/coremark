@@ -37,6 +37,16 @@ Original Author: Shay Gal-on
 #ifndef HAS_TIME_H
 #define HAS_TIME_H 1
 #endif
+/* Configuration : HAS_INTTYPES_H
+	Define to 1 if platform has the inittype.h header file,
+	and implementation of functions thereof.
+*/
+#ifndef HAS_INITTYPES_H
+#define HAS_INITTYPES_H 1
+#endif
+#if HAS_INITTYPES_H
+#include <inttypes.h>
+#endif
 /* Configuration: USE_CLOCK
 	Define to 1 if platform has the time.h header file,
 	and implementation of functions thereof.

@@ -44,6 +44,11 @@ Original Author: Shay Gal-on
 #define ee_printf printf
 #endif
 
+/* for printf, should be defined by inttypes.h */
+#ifndef PRIu32
+#define PRIu32 "lu"
+#endif
+
 /* Actual benchmark execution in iterate */
 void *iterate(void *pres);
 
