@@ -128,11 +128,11 @@ What is and is not allowed.
 ~~~
 4. All source files must be compiled with the same flags.
 5. All data type sizes must match size in bits such that:
-	* `ee_u8` is an 8 bits datatype.
-	* `ee_s16` is a 16 bits datatype.
-	* `ee_u16` is a 16 bits datatype.
-	* `ee_s32` is a 32 bits datatype.
-	* `ee_u32` is a 32 bits datatype.
+	* `ee_u8` is an unsigned 8-bit datatype.
+	* `ee_s16` is a signed 16-bit datatype.
+	* `ee_u16` is an unsigned 16-bit datatype.
+	* `ee_s32` is a signed 32-bit datatype.
+	* `ee_u32` is an unsigned 32-bit datatype.
 
 ## Allowed
 
