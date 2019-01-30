@@ -183,7 +183,7 @@ static char *iaddr(char *str, unsigned char *addr, int size, int precision, int 
   return str;
 }
 
-#ifdef HAS_FLOAT
+#if HAS_FLOAT
 
 char *ecvtbuf(double arg, int ndigits, int *decpt, int *sign, char *buf);
 char *fcvtbuf(double arg, int ndigits, int *decpt, int *sign, char *buf);
@@ -529,7 +529,7 @@ repeat:
       case 'u':
         break;
 
-#ifdef HAS_FLOAT
+#if HAS_FLOAT
 
       case 'f':
         str = flt(str, va_arg(args, double), field_width, precision, *fmt, flags | SIGN);
