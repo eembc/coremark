@@ -86,7 +86,12 @@ typedef signed int ee_s32;
 typedef double ee_f32;
 typedef unsigned char ee_u8;
 typedef unsigned int ee_u32;
+typedef signed long ee_u64;
+#if __riscv_xlen == 32
 typedef ee_u32 ee_ptr_int;
+#else
+typedef ee_u64 ee_ptr_int;
+#endif
 typedef signed int ee_size_t;
 #define NULL ((void *)0)
 /* align_mem :
