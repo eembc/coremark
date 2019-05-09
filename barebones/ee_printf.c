@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include <coremark.h>
+#include "coremark.h"
 #include <stdarg.h>
 
 #define ZEROPAD  	(1<<0)	/* Pad with zero */
@@ -29,9 +29,9 @@ limitations under the License.
 
 static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
 static char *upper_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static ee_size_t strnlen(const char *s, ee_size_t count);
+static size_t strnlen(const char *s, size_t count);
 
-static ee_size_t strnlen(const char *s, ee_size_t count)
+static size_t strnlen(const char *s, size_t count)
 {
   const char *sc;
   for (sc = s; *sc != '\0' && count--; ++sc);
@@ -183,7 +183,7 @@ static char *iaddr(char *str, unsigned char *addr, int size, int precision, int 
   return str;
 }
 
-#if HAS_FLOAT
+#if (HAS_FLOAT == 1)
 
 char *ecvtbuf(double arg, int ndigits, int *decpt, int *sign, char *buf);
 char *fcvtbuf(double arg, int ndigits, int *decpt, int *sign, char *buf);
@@ -529,7 +529,7 @@ repeat:
       case 'u':
         break;
 
-#if HAS_FLOAT
+#if (HAS_FLOAT == 1)
 
       case 'f':
         str = flt(str, va_arg(args, double), field_width, precision, *fmt, flags | SIGN);
@@ -561,7 +561,7 @@ repeat:
 }
 
 void uart_send_char(char c) {
-#error "You must implement the method uart_send_char to use this file!\n";
+//#error "You must implement the method uart_send_char to use this file!\n";
 /*	Output of a char to a UART usually follows the following model:
 	Wait until UART is ready
 	Write char to UART
@@ -574,6 +574,9 @@ void uart_send_char(char c) {
 	
 	Check the UART sample code on your platform or the board documentation.
 */
+
+
+// ADD OUR PRINT OUT HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
 int ee_printf(const char *fmt, ...)

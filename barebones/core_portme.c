@@ -17,6 +17,7 @@ Original Author: Shay Gal-on
 */
 #include "coremark.h"
 #include "core_portme.h"
+#define PERFORMANCE_RUN 1
 
 #if VALIDATION_RUN
 	volatile ee_s32 seed1_volatile=0x3415;
@@ -33,7 +34,7 @@ Original Author: Shay Gal-on
 	volatile ee_s32 seed2_volatile=0x8;
 	volatile ee_s32 seed3_volatile=0x8;
 #endif
-	volatile ee_s32 seed4_volatile=ITERATIONS;
+	volatile ee_s32 seed4_volatile=2; //ITERATIONS;
 	volatile ee_s32 seed5_volatile=0;
 /* Porting : Timing functions
 	How to capture time and convert to seconds must be ported to whatever is supported by the platform.
@@ -41,7 +42,12 @@ Original Author: Shay Gal-on
 	Sample implementation for standard time.h and windows.h definitions included.
 */
 CORETIMETYPE barebones_clock() {
-	#error "You must implement a method to measure time in barebones_clock()! This function should return current time.\n"
+//	#error "You must implement a method to measure time in barebones_clock()! This function should return current time.\n"
+	//based off of bsg_manycore implimentation since we need a timer	
+        static CORETIMETYPE fake_timer=0;
+        fake_timer += 100;
+        return fake_timer;
+
 }
 /* Define : TIMER_RES_DIVIDER
 	Divider to trade off timer resolution and total time that can be measured.
@@ -108,7 +114,7 @@ ee_u32 default_num_contexts=1;
 */
 void portable_init(core_portable *p, int *argc, char *argv[])
 {
-	#error "Call board initialization routines in portable init (if needed), in particular initialize UART!\n"
+//	#error "Call board initialization routines in portable init (if needed), in particular initialize UART!\n"
 	if (sizeof(ee_ptr_int) != sizeof(ee_u8 *)) {
 		ee_printf("ERROR! Please define ee_ptr_int to a type that holds a pointer!\n");
 	}
