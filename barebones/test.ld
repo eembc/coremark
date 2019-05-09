@@ -27,7 +27,7 @@ SECTIONS
   
   /* place all code below 0x80000000 to avoid reallocation truncated to fit error but 
   *  to keep start address the same accross benchmarks */  
-  . = 0x7FF00000;
+  /*. = 0x7FF00000;*/
   . = ALIGN(0x1000);
   .tohost : { *(.tohost) }
 
