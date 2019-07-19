@@ -109,7 +109,7 @@ The default for such a target when testing different configurations could be:
 
 # Submitting Results
 
-CoreMark results can be submitted on the web. Open a web browser and go to https://www.eembc.org/coremark/login.php?url=enter_score.php. After registering an account you may enter a score.
+CoreMark results can be submitted on the web. Open a web browser and go to the [submission page](https://www.eembc.org/coremark/submit.php). After registering an account you may enter a score.
 
 # Run Rules
 What is and is not allowed.
