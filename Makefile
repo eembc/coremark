@@ -47,7 +47,7 @@ vpath %.h $(PORT_DIR)
 vpath %.mak $(PORT_DIR)
 include $(PORT_DIR)/core_portme.mak
 
-ifndef $(ITERATIONS)
+ifndef ITERATIONS
 ITERATIONS=0
 endif
 ifdef REBUILD
