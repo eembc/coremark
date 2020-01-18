@@ -75,7 +75,7 @@ ee_u16 crcu8(ee_u8 data, ee_u16 crc);
 ee_u16 crc16(ee_s16 newval, ee_u16 crc);
 ee_u16 crcu16(ee_u16 newval, ee_u16 crc);
 ee_u16 crcu32(ee_u32 newval, ee_u16 crc);
-ee_u8 check_data_types();
+ee_u8 check_data_types(void);
 void *portable_malloc(ee_size_t size);
 void portable_free(void *p);
 ee_s32 parseval(char *valstring);
