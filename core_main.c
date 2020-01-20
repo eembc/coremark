@@ -32,9 +32,19 @@ Original Author: Shay Gal-on
 	Returns:
 	NULL.
 */
+#if POINTER_SPACE == 8
 static ee_u16 list_known_crc[]   =      {(ee_u16)0xd4b0,(ee_u16)0x3340,(ee_u16)0x6a79,(ee_u16)0xe714,(ee_u16)0xe3c1};
 static ee_u16 matrix_known_crc[] =      {(ee_u16)0xbe52,(ee_u16)0x1199,(ee_u16)0x5608,(ee_u16)0x1fd7,(ee_u16)0x0747};
 static ee_u16 state_known_crc[]  =      {(ee_u16)0x5e47,(ee_u16)0x39bf,(ee_u16)0xe5a4,(ee_u16)0x8e3a,(ee_u16)0x8d84};
+#elif POINTER_SPACE == 16
+/* Reference CRCs from amd64 */
+/* FIXME, cases 0-2 need updating */
+static ee_u16 list_known_crc[]   =      {(ee_u16)0,(ee_u16)0,(ee_u16)0,(ee_u16)0x70a5,(ee_u16)0x6329};
+static ee_u16 matrix_known_crc[] =      {(ee_u16)0,(ee_u16)0,(ee_u16)0,(ee_u16)0xdb4b,(ee_u16)0xbf03};
+static ee_u16 state_known_crc[]  =      {(ee_u16)0,(ee_u16)0,(ee_u16)0,(ee_u16)0x905f,(ee_u16)0x5735};
+#else
+#error Unhandled POINTER_SPACE value
+#endif
 void *iterate(void *pres) {
 	ee_u32 i;
 	ee_u16 crc;
@@ -284,6 +294,7 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 	}
 	total_errors+=check_data_types();
 	/* and report results */
+	ee_printf("Pointer space    : %d\n", POINTER_SPACE);
 	ee_printf("CoreMark Size    : %lu\n", (long unsigned) results[0].size);
 	ee_printf("Total ticks      : %lu\n", (long unsigned) total_time);
 #if HAS_FLOAT

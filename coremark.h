@@ -65,6 +65,11 @@ typedef ee_u32 secs_ret;
 #define MAIN_RETURN_TYPE int
 #endif 
 
+#ifndef POINTER_SPACE
+/* Reserve 64b per pointer */
+#define POINTER_SPACE 8
+#endif
+
 void start_time(void);
 void stop_time(void);
 CORE_TICKS get_time(void);
