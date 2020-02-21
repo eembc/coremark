@@ -1,4 +1,5 @@
 /*
+Copyright 2020 Hesham Almatary
 Copyright 2018 Embedded Microprocessor Benchmark Consortium (EEMBC)
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,6 +23,10 @@ Original Author: Shay Gal-on
 #if CALLGRIND_RUN
 #include <valgrind/callgrind.h>
 #endif
+
+#include <bsp.h>
+
+int main( int, char ** );
 
 #if (MEM_METHOD==MEM_MALLOC)
 /* Function: portable_malloc
@@ -333,3 +338,27 @@ ee_u8 core_stop_parallel(core_results *res) {
 #error "Please implement multicore functionality in core_portme.c to use multiple contexts."
 #endif /* multithread implementations */
 #endif
+
+rtems_task Init(
+  rtems_task_argument ignored
+);
+
+rtems_task Init(
+  rtems_task_argument ignored
+)
+{
+  int ret = main(0, NULL);
+  exit(ret);
+}
+
+/* configuration information */
+#define CONFIGURE_APPLICATION_NEEDS_SIMPLE_CONSOLE_DRIVER
+#define CONFIGURE_APPLICATION_NEEDS_CLOCK_DRIVER
+
+#define CONFIGURE_MAXIMUM_TASKS 20
+
+#define CONFIGURE_RTEMS_INIT_TASKS_TABLE
+
+#define CONFIGURE_INIT
+
+#include <rtems/confdefs.h>
