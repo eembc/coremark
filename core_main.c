@@ -119,12 +119,12 @@ MAIN_RETURN_TYPE main(int argc, char *argv[]) {
 		results[0].execs=ALL_ALGORITHMS_MASK;
 	}
 		/* put in some default values based on one seed only for easy testing */
-	if ((results[0].seed1==0) && (results[0].seed2==0) && (results[0].seed3==0)) { /* validation run */
+	if ((results[0].seed1==0) && (results[0].seed2==0) && (results[0].seed3==0)) { /* perfromance run */
 		results[0].seed1=0;
 		results[0].seed2=0;
 		results[0].seed3=0x66;
 	}
-	if ((results[0].seed1==1) && (results[0].seed2==0) && (results[0].seed3==0)) { /* perfromance run */
+	if ((results[0].seed1==1) && (results[0].seed2==0) && (results[0].seed3==0)) { /* validation run */
 		results[0].seed1=0x3415;
 		results[0].seed2=0x3415;
 		results[0].seed3=0x66;
