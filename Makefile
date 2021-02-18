@@ -37,12 +37,7 @@ ifneq (,$(findstring FreeBSD,$(UNAME)))
 PORT_DIR=freebsd
 endif
 ifneq (,$(findstring Linux,$(UNAME)))
-MACHINE=$(shell uname -m)
-ifneq (,$(findstring 64,$(MACHINE)))
-PORT_DIR=linux64
-else
 PORT_DIR=linux
-endif
 endif
 endif
 ifndef PORT_DIR
@@ -95,7 +90,7 @@ link: compile
 
 endif
 
-$(OUTFILE): $(SRCS) $(HEADERS) Makefile core_portme.mak $(FORCE_REBUILD)
+$(OUTFILE): $(SRCS) $(HEADERS) Makefile core_portme.mak $(EXTRA_DEPENDS) $(FORCE_REBUILD)
 	$(MAKE) port_prebuild
 	$(MAKE) link
 	$(MAKE) port_postbuild

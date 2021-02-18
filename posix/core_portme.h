@@ -22,6 +22,9 @@ Original Author: Shay Gal-on
 */
 #ifndef CORE_PORTME_H
 #define CORE_PORTME_H
+
+#include "core_portme_posix_overrides.h"
+
 /************************/
 /* Data types and settings */
 /************************/
@@ -94,6 +97,8 @@ typedef clock_t CORE_TICKS;
 #define MEM_LOCATION_UNSPEC 1
 #endif
 
+#include <stdint.h>
+
 /* Data Types:
         To avoid compiler issues, define the data types that need ot be used for
    8b, 16b and 32b in <core_portme.h>.
@@ -108,12 +113,9 @@ typedef signed int     ee_s32;
 typedef double         ee_f32;
 typedef unsigned char  ee_u8;
 typedef unsigned int   ee_u32;
-typedef ee_u32         ee_ptr_int;
+typedef uintptr_t      ee_ptr_int;
 typedef size_t         ee_size_t;
-/* align_mem:
-        This macro is used to align an offset to point to a 32b value. It is
-   used in the Matrix algorithm to initialize the input memory blocks.
-*/
+/* align an offset to point to a 32b value */
 #define align_mem(x) (void *)(4 + (((ee_ptr_int)(x)-1) & ~3))
 
 /* Configuration: SEED_METHOD
