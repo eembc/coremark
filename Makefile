@@ -30,6 +30,9 @@ UNAME=$(shell if command -v uname 2> /dev/null; then uname ; fi)
 ifneq (,$(findstring CYGWIN,$(UNAME)))
 PORT_DIR=cygwin
 endif
+ifneq (,$(findstring Darwin,$(UNAME)))
+PORT_DIR=macos
+endif
 ifneq (,$(findstring FreeBSD,$(UNAME)))
 PORT_DIR=freebsd
 endif
