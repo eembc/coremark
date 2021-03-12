@@ -87,7 +87,7 @@ Use `XCFLAGS=-DMULTITHREAD=N` where N is number of threads to run in parallel. S
 
 The above will compile the benchmark for execution on 4 cores, using POSIX Threads API.
 
-Note: linking may fail on the previous command if your linker does not automatically add the `pthread` library. If you encounter `undefined reference` errors, please modify the `core_portme.mak` file for your platform, (e.g. `linux64/core_portme.mak`) and add `-lpthread` to the `LFLAGS_END` parameter.
+Note: linking may fail on the previous command if your linker does not automatically add the `pthread` library. If you encounter `undefined reference` errors, please modify the `core_portme.mak` file for your platform, (e.g. `linux/core_portme.mak`) and add `-lpthread` to the `LFLAGS_END` parameter.
 
 # Run Parameters for the Benchmark Executable
 CoreMark's executable takes several parameters as follows (but only if `main()` accepts arguments):

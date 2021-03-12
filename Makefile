@@ -30,13 +30,14 @@ UNAME=$(shell if command -v uname 2> /dev/null; then uname ; fi)
 ifneq (,$(findstring CYGWIN,$(UNAME)))
 PORT_DIR=cygwin
 endif
-ifneq (,$(findstring Linux,$(UNAME)))
-MACHINE=$(shell uname -m)
-ifneq (,$(findstring 64,$(MACHINE)))
-PORT_DIR=linux64
-else
-PORT_DIR=linux
+ifneq (,$(findstring Darwin,$(UNAME)))
+PORT_DIR=macos
 endif
+ifneq (,$(findstring FreeBSD,$(UNAME)))
+PORT_DIR=freebsd
+endif
+ifneq (,$(findstring Linux,$(UNAME)))
+PORT_DIR=linux
 endif
 endif
 ifndef PORT_DIR
@@ -89,7 +90,7 @@ link: compile
 
 endif
 
-$(OUTFILE): $(SRCS) $(HEADERS) Makefile core_portme.mak $(FORCE_REBUILD)
+$(OUTFILE): $(SRCS) $(HEADERS) Makefile core_portme.mak $(EXTRA_DEPENDS) $(FORCE_REBUILD)
 	$(MAKE) port_prebuild
 	$(MAKE) link
 	$(MAKE) port_postbuild
