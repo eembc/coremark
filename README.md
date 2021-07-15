@@ -47,7 +47,7 @@ Minimum required run time: **Results are only valid for reporting if the benchma
 To add compiler flags from the command line, use `XCFLAGS` e.g.:
 
 ~~~
-% make XCFLAGS="-g -DMULTITHREAD=4 -DUSE_FORK=1"
+% make XCFLAGS="-DMULTITHREAD=4 -DUSE_FORK"
 ~~~
 
 ### Make flag: `CORE_DEBUG`
@@ -82,10 +82,14 @@ The above will compile the benchmark for a performance run and 1000 iterations. 
 Use `XCFLAGS=-DMULTITHREAD=N` where N is number of threads to run in parallel. Several implementations are available to execute in multiple contexts, or you can implement your own in `core_portme.c`.
 
 ~~~
-% make XCFLAGS="-DMULTITHREAD=4 -DUSE_PTHREAD"
+% make XCFLAGS="-DMULTITHREAD=4 -DUSE_PTHREAD -lpthread"
 ~~~
 
-The above will compile the benchmark for execution on 4 cores, using POSIX Threads API.
+The above will compile the benchmark for execution on 4 cores, using POSIX Threads API. Forking is also supported:
+
+~~~
+% make XCFLAGS="-DMULTITHREAD=4 -DUSE_FORK"
+~~~
 
 Note: linking may fail on the previous command if your linker does not automatically add the `pthread` library. If you encounter `undefined reference` errors, please modify the `core_portme.mak` file for your platform, (e.g. `linux/core_portme.mak`) and add `-lpthread` to the `LFLAGS_END` parameter.
 
