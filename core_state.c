@@ -206,7 +206,7 @@ ee_isdigit(ee_u8 c)
         Actual state machine.
 
         The state machine will continue scanning until either:
-        1 - an invalid input is detcted.
+        1 - an invalid input is detected.
         2 - a valid number has been detected.
 
         The input pointer is updated to point to the end of the token, and the
