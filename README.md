@@ -394,7 +394,7 @@ Many thanks to all of the individuals who helped with the development or testing
 * Shumpei Kawasaki, RENESAS
 
 # Legal
-Please refer to LICENSE.md in this reposity for a description of your rights to use this code.
+Please refer to LICENSE.md in this repository for a description of your rights to use this code.
 
 # Copyright
 Copyright © 2009 EEMBC All rights reserved. 

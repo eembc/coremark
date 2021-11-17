@@ -146,7 +146,7 @@ main(int argc, char *argv[])
     /* put in some default values based on one seed only for easy testing */
     if ((results[0].seed1 == 0) && (results[0].seed2 == 0)
         && (results[0].seed3 == 0))
-    { /* perfromance run */
+    { /* performance run */
         results[0].seed1 = 0;
         results[0].seed2 = 0;
         results[0].seed3 = 0x66;
