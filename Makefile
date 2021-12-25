@@ -124,7 +124,7 @@ load: $(OUTFILE)
 
 .PHONY: clean
 clean:
-	rm -f $(OUTFILE) $(OPATH)*.log *.info $(OPATH)index.html $(PORT_CLEAN)
+	rm -f $(OUTFILE) $(OBJS) $(OPATH)*.log *.info $(OPATH)index.html $(PORT_CLEAN)
 
 .PHONY: force_rebuild
 force_rebuild:
