@@ -215,6 +215,10 @@ portable_init(core_portable *p, int *argc, char *argv[])
         ee_printf("Arg[%d]=%s\n", i, argv[i]);
     }
 #endif
+
+    (void)argc; // prevent unused warning
+    (void)argv; // prevent unused warning
+    
     if (sizeof(ee_ptr_int) != sizeof(ee_u8 *))
     {
         ee_printf(

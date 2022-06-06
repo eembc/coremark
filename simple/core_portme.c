@@ -127,6 +127,10 @@ ee_u32 default_num_contexts = 1;
 void
 portable_init(core_portable *p, int *argc, char *argv[])
 {
+
+    (void)argc; // prevent unused warning
+    (void)argv; // prevent unused warning
+
     if (sizeof(ee_ptr_int) != sizeof(ee_u8 *))
     {
         ee_printf(
