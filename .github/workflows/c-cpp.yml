@@ -1,4 +1,4 @@
-name: CI with make on Push or PR
+name: Check MD5s and make
 on:
   push:
     branches: [ "main" ]
@@ -12,5 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Check md5sums
+      run: md5sum -c coremark.md5
     - name: make
       run: make
