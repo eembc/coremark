@@ -21,14 +21,14 @@ For cross compile platforms please adjust `core_portme.mak`, `core_portme.h` (an
 ~~~
 
 ## Make Targets
-`run` - Default target, creates `run1.log` and `run2.log`.
-`run1.log` - Run the benchmark with performance parameters, and output to `run1.log`
-`run2.log` - Run the benchmark with validation parameters, and output to `run2.log`
-`run3.log` - Run the benchmark with profile generation parameters, and output to `run3.log`
-`compile` - compile the benchmark executable 
-`link` - link the benchmark executable
-`check` - test MD5 of sources that may not be modified
-`clean` - clean temporary files
+* `run` - Default target, creates `run1.log` and `run2.log`.
+* `run1.log` - Run the benchmark with performance parameters, and output to `run1.log`
+* `run2.log` - Run the benchmark with validation parameters, and output to `run2.log`
+* `run3.log` - Run the benchmark with profile generation parameters, and output to `run3.log`
+* `compile` - compile the benchmark executable 
+* `link` - link the benchmark executable
+* `check` - test MD5 of sources that may not be modified
+* `clean` - clean temporary files
 
 ### Make flag: `ITERATIONS` 
 By default, the benchmark will run between 10-100 seconds. To override, use `ITERATIONS=N`
