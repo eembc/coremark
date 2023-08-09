@@ -356,7 +356,7 @@ for (i = 0; i < MULTITHREAD; i++)
     total_errors += check_data_types();
     /* and report results */
     ee_printf("CoreMark Size    : %lu\n", (long unsigned)results[0].size);
-    ee_printf("Total ticks      : %lu\n", (long unsigned)total_time);
+    ee_printf("Total ticks      : %llu\n", (long long unsigned)total_time);
 #if HAS_FLOAT
     ee_printf("Total time (secs): %f\n", time_in_secs(total_time));
     if (time_in_secs(total_time) > 0)
