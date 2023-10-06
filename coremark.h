@@ -152,7 +152,7 @@ typedef struct RESULTS_S
     ee_u16 crcmatrix;
     ee_u16 crcstate;
     ee_s16 err;
-    /* ultithread specific */
+    /* multithread specific */
     core_portable port;
 } core_results;
 
