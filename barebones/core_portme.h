@@ -77,7 +77,7 @@ Original Author: Shay Gal-on
 #endif
 
 /* Data Types :
-        To avoid compiler issues, define the data types that need ot be used for
+        To avoid compiler issues, define the data types that need to be used for
    8b, 16b and 32b in <core_portme.h>.
 
         *Imprtant* :
