@@ -20,6 +20,32 @@ For cross compile platforms please adjust `core_portme.mak`, `core_portme.h` (an
 % make PORT_DIR=<platform>
 ~~~
 
+## Zephyr RTOS port
+The [zephyr RTOS](https://zephyrproject.org) is supported as a target for coremark.
+Zephyr being a unikernel operation system, it needs to be built and linked against coremark directly.
+To this end, the zephyr port uses zephyr's CMake build system.
+
+In order to run corebench on a zephyr target, start by configuring a zephyr workplace in accordance with the [zephyr getting started guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
+Note that especially the correct installation of the toolchain using its `setup.sh` and the `west zephyr-export` step are important for being able to build coremark. Ideally, run one of the zephyr samples on your board *before trying to run the coremark port* to test that everything was set up properly.
+The port was tested with version 4.4.0 of zephyr, but should work with later versions as well.
+
+In order to build the port, run zephyr's build command *from the top of the coremark directory*:
+
+```bash
+  west build -p always -b <your board> zephyr/
+```
+
+You can then load and execute zephyr with coremark using, e.g., the *flash* and *debug* commands that come with zephyr's build tool west:
+
+```bash
+  west debug # launches into GDB shell, stopped at first instruction
+  west flash # launches without debugger
+```
+
+The make flags below except `REBUILD` are supported.
+Be sure to provide the flag `-p` (*pristine*) to `west build` to force a re-build.
+If unsure, delete the *build* directory as well.
+
 ## Make Targets
 * `run` - Default target, creates `run1.log` and `run2.log`.
 * `run1.log` - Run the benchmark with performance parameters, and output to `run1.log`
