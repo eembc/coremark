@@ -44,6 +44,10 @@ Original Author: Shay Gal-on
 #define ee_printf printf
 #endif
 
+#ifndef CORE_MIN_RUNTIME
+#define CORE_MIN_RUNTIME 10
+#endif
+
 /* Actual benchmark execution in iterate */
 void *iterate(void *pres);
 
@@ -181,3 +185,8 @@ ee_u32 core_init_matrix(ee_u32      blksize,
                         ee_s32      seed,
                         mat_params *p);
 ee_u16 core_bench_matrix(mat_params *p, ee_s16 seed, ee_u16 crc);
+
+/* Single iteration time measurement */
+#ifndef MEASURE_ONE_ITER
+#define MEASURE_ONE_ITER 0
+#endif

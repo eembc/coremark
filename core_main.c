@@ -119,6 +119,10 @@ main(int argc, char *argv[])
     ee_s16       known_id = -1, total_errors = 0;
     ee_u16       seedcrc = 0;
     CORE_TICKS   total_time;
+#if MEASURE_ONE_ITER
+    ee_u32       org_iterations;
+    CORE_TICKS   sub_total_time;
+#endif
     core_results results[MULTITHREAD];
 #if (MEM_METHOD == MEM_STACK)
     ee_u8 stack_memblock[TOTAL_DATA_SIZE * MULTITHREAD];
@@ -278,11 +282,32 @@ for (i = 0; i < MULTITHREAD; i++)
     {
         core_stop_parallel(&results[i]);
     }
-#else
-    iterate(&results[0]);
-#endif
     stop_time();
     total_time = get_time();
+#elif MEASURE_ONE_ITER
+    /* Must have more than one iterations */
+    if (results[0].iterations <= 1) {
+        ee_printf("Need more than one iteration\n");
+        return MAIN_RETURN_VAL;
+    }
+    /* Run N-1 iterations, measure sub-total time */
+    org_iterations = results[0].iterations;
+    results[0].iterations--;
+    iterate(&results[0]);
+    stop_time();
+    sub_total_time = get_time();
+    /* Run 1 iteration, measure time, calculate total time */
+    start_time();
+    results[0].iterations = 1;
+    iterate(&results[0]);
+    stop_time();
+    total_time = sub_total_time + get_time();
+    results[0].iterations = org_iterations;
+#else
+    iterate(&results[0]);
+    stop_time();
+    total_time = get_time();
+#endif
     /* get a function of the input to report */
     seedcrc = crc16(results[0].seed1, seedcrc);
     seedcrc = crc16(results[0].seed2, seedcrc);
@@ -370,12 +395,22 @@ for (i = 0; i < MULTITHREAD; i++)
                   default_num_contexts * results[0].iterations
                       / time_in_secs(total_time));
 #endif
-    if (time_in_secs(total_time) < 10)
+    if (time_in_secs(total_time) < CORE_MIN_RUNTIME)
     {
         ee_printf(
-            "ERROR! Must execute for at least 10 secs for a valid result!\n");
+            "ERROR! Must execute for at least %d secs for a valid result!\n",
+            CORE_MIN_RUNTIME);
         total_errors++;
     }
+
+#if MEASURE_ONE_ITER
+    ee_printf("Iteration ticks  : %lu\n", total_time - sub_total_time);
+#if HAS_FLOAT
+    ee_printf("Iteration time(s): %f\n", time_in_secs(total_time - sub_total_time));
+#else
+    ee_printf("Iteration time(s): %d\n", time_in_secs(total_time - sub_total_time));
+#endif
+#endif
 
     ee_printf("Iterations       : %lu\n",
               (long unsigned)default_num_contexts * results[0].iterations);
