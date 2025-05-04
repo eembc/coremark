@@ -315,7 +315,7 @@ for (i = 0; i < MULTITHREAD; i++)
             ee_printf("2K validation run parameters for coremark.\n");
             break;
         default:
-            total_errors = -1;
+            total_errors++;
             break;
     }
     if (known_id >= 0)
@@ -426,7 +426,7 @@ for (i = 0; i < MULTITHREAD; i++)
     }
     if (total_errors > 0)
         ee_printf("Errors detected\n");
-    if (total_errors < 0)
+    if (known_id < 0)
         ee_printf(
             "Cannot validate operation for these seed values, please compare "
             "with results on a known platform.\n");
