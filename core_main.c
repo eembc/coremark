@@ -366,7 +366,7 @@ for (i = 0; i < MULTITHREAD; i++)
 #else
     ee_printf("Total time (secs): %d\n", time_in_secs(total_time));
     if (time_in_secs(total_time) > 0)
-        ee_printf("Iterations/Sec   : %d\n",
+        ee_printf("Iterations/Sec   : %"PRIu32"\n",
                   default_num_contexts * results[0].iterations
                       / time_in_secs(total_time));
 #endif
