@@ -41,6 +41,8 @@ Original Author: Shay Gal-on
 #include <stdio.h>
 #endif
 #if HAS_PRINTF
+/* Adding inttypes.h (C99) to support PRIu32 in printf */
+#include <inttypes.h>
 #define ee_printf printf
 #endif
 
