@@ -84,6 +84,9 @@ Original Author: Shay Gal-on
         ee_ptr_int needs to be the data type used to hold pointers, otherwise
    coremark may fail!!!
 */
+
+#include <stddef.h> /* Note: Required for size_t */
+
 typedef signed short   ee_s16;
 typedef unsigned short ee_u16;
 typedef signed int     ee_s32;
