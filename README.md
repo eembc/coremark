@@ -397,6 +397,43 @@ Many thanks to all of the individuals who helped with the development or testing
 * Rob Cosaro, NXP
 * Shumpei Kawasaki, RENESAS
 
+# Code changes Q3-2026
+
+- coremark.h
+  - "size" element in typedef struct core_results is renamed to datasize to workaround a limitation in Keil C51 compiler.
+    In this compiler, "size", "data", "pdata" are considered reserved keywords and cannot be used by the program code
+    as names for variables.
+  -  Update function prototype for crcu8 function from core_util.c due to change in input parameter name.
+  - Add HAS_C99 macro, and add inttypes.h if the compiler supports C99 (HAS_C99 set to 1)
+- core_main.c:
+  - Various code changes in main() due to "size" renamed to "datasize" in core_results structure.
+  - Adding STATIC_MEMBLK_ATTR macro for sttribute of the static_memblk[TOTAL_DATA_SIZE]
+    - This allows static_memblk[] to be declared as xdata when using MCS51 architecture.
+    - This also addressed the request in https://github.com/eembc/coremark/pull/58 
+  - Update result report to use the new HAS_C99 macro to select if PRIu32 format specifier can be used.
+- core_util.c:
+  - crcu8 function: input parameter is renamed from "data" to "newval" to allow the code to be compiled by Keil C51
+    - This change also align crcu8 function with other crc functions where the first parameters are named as "newval"
+  - check_data_types function: update the comparison between size of pointer and size of integer ee_ptr_int
+    - This change remove the error message.
+- core_list_join.c
+  - Adding __COREMARK_REENTRANT macro
+    - This macro is added to support MCS51 architecture. When using MCS51 architecture, by default the C compiler allocate 
+      variables in functions with fixed address. This causes problems to functions that can be reentrant.
+      This problem can be worked around by adding a reentrant function attribute, and this attribute is compiler specific.
+      By declaring the __COREMARK_REENTRANT macro, users can define the compiler specific reentrant attribute easily.
+      The __COREMARK_REENTRANT macro is defined for function pointers "*list_cmp" and "*core_list_mergesort".
+    - clac_func function: Several variable/parameter names are changed to work around the limitations in Keil C51 compiler.
+      The name changes incuded:
+      - parameter *pdata changed to *ptr_data
+      - variable data changed to curr_data
+      - res->size changed to res->datasize
+- barebones/core_portme.h
+  - Add stdint.h and change the following mapping.
+    - ee_s32 to int32_t (it was "signed int" but this could maps to 16-bit integer in 8-bit and 16-bit architectures)
+    - ee_u32 to uint32_t (it was "unsigned int" but this could maps to 16-bit integer in 8-bit and 16-bit architectures)
+
+
 # Legal
 Please refer to LICENSE.md in this repository for a description of your rights to use this code.
 

@@ -87,7 +87,7 @@ typedef clock_t CORE_TICKS;
         To avoid compiler issues, define the data types that need ot be used for
    8b, 16b and 32b in <core_portme.h>.
 
-        *Imprtant* :
+        *Important* :
         ee_ptr_int needs to be the data type used to hold pointers, otherwise
    coremark may fail!!!
 */
