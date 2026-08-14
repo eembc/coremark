@@ -428,10 +428,10 @@ Many thanks to all of the individuals who helped with the development or testing
       - parameter *pdata changed to *ptr_data
       - variable data changed to curr_data
       - res->size changed to res->datasize
-- barebones/core_portme.h
-  - Add stdint.h and change the following mapping.
-    - ee_s32 to int32_t (it was "signed int" but this could maps to 16-bit integer in 8-bit and 16-bit architectures)
-    - ee_u32 to uint32_t (it was "unsigned int" but this could maps to 16-bit integer in 8-bit and 16-bit architectures)
+- core_portme.h in barebones, simple and posix
+  - Data type : Added stdint.h and changed the following mapping.
+    - Maps ee_s32 to int32_t (it was "signed int" but this could maps to 16-bit integer in 8-bit and 16-bit architectures)
+    - Maps ee_u32 to uint32_t (it was "unsigned int" but this could maps to 16-bit integer in 8-bit and 16-bit architectures)
 
 
 # Legal
