@@ -101,7 +101,7 @@ Original Author: Shay Gal-on
 */
 
 #include <stddef.h> /* Note: Required for size_t */
-#include <stdint.h>
+#include <stdint.h> /* Note: Required for int32_t and uint32_t */
 
 typedef signed short   ee_s16;
 typedef unsigned short ee_u16;
