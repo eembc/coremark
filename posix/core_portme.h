@@ -99,22 +99,23 @@ typedef clock_t CORE_TICKS;
 #define MEM_LOCATION_UNSPEC 1
 #endif
 
-#include <stdint.h>
+#include <stddef.h> /* Note: Required for size_t */
+#include <stdint.h> /* Note: Required for int32_t and uint32_t */
 
 /* Data Types:
         To avoid compiler issues, define the data types that need ot be used for
    8b, 16b and 32b in <core_portme.h>.
 
-        *Imprtant*:
+        *Important*:
         ee_ptr_int needs to be the data type used to hold pointers, otherwise
    coremark may fail!!!
 */
 typedef signed short   ee_s16;
 typedef unsigned short ee_u16;
-typedef signed int     ee_s32;
+typedef int32_t        ee_s32;
 typedef float          ee_f32;
 typedef unsigned char  ee_u8;
-typedef unsigned int   ee_u32;
+typedef uint32_t       ee_u32;
 typedef uintptr_t      ee_ptr_int;
 typedef size_t         ee_size_t;
 /* align an offset to point to a 32b value */

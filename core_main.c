@@ -82,7 +82,11 @@ ee_s32 get_seed_32(int i);
 #endif
 
 #if (MEM_METHOD == MEM_STATIC)
+#ifdef STATIC_MEMBLK_ATTR
+STATIC_MEMBLK_ATTR ee_u8 static_memblk[TOTAL_DATA_SIZE];
+#else
 ee_u8 static_memblk[TOTAL_DATA_SIZE];
+#endif
 #endif
 char *mem_name[3] = { "Static", "Heap", "Stack" };
 /* Function: main
@@ -160,7 +164,7 @@ main(int argc, char *argv[])
     }
 #if (MEM_METHOD == MEM_STATIC)
     results[0].memblock[0] = (void *)static_memblk;
-    results[0].size        = TOTAL_DATA_SIZE;
+    results[0].datasize    = TOTAL_DATA_SIZE;
     results[0].err         = 0;
 #if (MULTITHREAD > 1)
 #error "Cannot use a static data area with multiple contexts!"
@@ -202,7 +206,7 @@ for (i = 0; i < MULTITHREAD; i++)
             num_algorithms++;
     }
     for (i = 0; i < MULTITHREAD; i++)
-        results[i].size = results[i].size / num_algorithms;
+        results[i].datasize = results[i].datasize / num_algorithms;
     /* Assign pointers */
     for (i = 0; i < NUM_ALGORITHMS; i++)
     {
@@ -211,7 +215,7 @@ for (i = 0; i < MULTITHREAD; i++)
         {
             for (ctx = 0; ctx < MULTITHREAD; ctx++)
                 results[ctx].memblock[i + 1]
-                    = (char *)(results[ctx].memblock[0]) + results[0].size * j;
+                    = (char *)(results[ctx].memblock[0]) + results[0].datasize * j;
             j++;
         }
     }
@@ -221,11 +225,11 @@ for (i = 0; i < MULTITHREAD; i++)
         if (results[i].execs & ID_LIST)
         {
             results[i].list = core_list_init(
-                results[0].size, results[i].memblock[1], results[i].seed1);
+                results[0].datasize, results[i].memblock[1], results[i].seed1);
         }
         if (results[i].execs & ID_MATRIX)
         {
-            core_init_matrix(results[0].size,
+            core_init_matrix(results[0].datasize,
                              results[i].memblock[2],
                              (ee_s32)results[i].seed1
                                  | (((ee_s32)results[i].seed2) << 16),
@@ -234,7 +238,7 @@ for (i = 0; i < MULTITHREAD; i++)
         if (results[i].execs & ID_STATE)
         {
             core_init_state(
-                results[0].size, results[i].seed1, results[i].memblock[3]);
+                results[0].datasize, results[i].seed1, results[i].memblock[3]);
         }
     }
 
@@ -287,8 +291,7 @@ for (i = 0; i < MULTITHREAD; i++)
     seedcrc = crc16(results[0].seed1, seedcrc);
     seedcrc = crc16(results[0].seed2, seedcrc);
     seedcrc = crc16(results[0].seed3, seedcrc);
-    seedcrc = crc16(results[0].size, seedcrc);
-
+    seedcrc = crc16(results[0].datasize, seedcrc);
     switch (seedcrc)
     {                /* test known output for common seeds */
         case 0x8a02: /* seed1=0, seed2=0, seed3=0x66, size 2000 per algorithm */
@@ -355,7 +358,7 @@ for (i = 0; i < MULTITHREAD; i++)
     }
     total_errors += check_data_types();
     /* and report results */
-    ee_printf("CoreMark Size    : %lu\n", (long unsigned)results[0].size);
+    ee_printf("CoreMark Size    : %lu\n", (long unsigned)results[0].datasize);
     ee_printf("Total ticks      : %lu\n", (long unsigned)total_time);
 #if HAS_FLOAT
     ee_printf("Total time (secs): %f\n", time_in_secs(total_time));
@@ -364,11 +367,19 @@ for (i = 0; i < MULTITHREAD; i++)
                   default_num_contexts * results[0].iterations
                       / time_in_secs(total_time));
 #else
+#if HAS_C99
     ee_printf("Total time (secs): %"PRIu32"\n", time_in_secs(total_time));
     if (time_in_secs(total_time) > 0)
         ee_printf("Iterations/Sec   : %"PRIu32"\n",
                   default_num_contexts * results[0].iterations
                       / time_in_secs(total_time));
+#else
+    ee_printf("Total time (secs): %d\n", (int)time_in_secs(total_time));
+    if (time_in_secs(total_time) > 0)
+        ee_printf("Iterations/Sec   : %d\n", (int) (
+                  default_num_contexts * results[0].iterations
+                      / time_in_secs(total_time)));
+#endif
 #endif
     if (time_in_secs(total_time) < 10)
     {

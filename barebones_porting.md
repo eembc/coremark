@@ -156,7 +156,7 @@ portable_init(core_portable *p, int *argc, char *argv[])
     cache_init();
     timer_config();
     
-    if (sizeof(ee_ptr_int) != sizeof(ee_u8 *))
+    if (sizeof(ee_ptr_int) < sizeof(ee_u8 *))
     {
         ee_printf(
             "ERROR! Please define ee_ptr_int to a type that holds a "

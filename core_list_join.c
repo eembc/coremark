@@ -48,6 +48,10 @@ input for the operation.
 
 */
 
+#ifndef __COREMARK_REENTRANT
+#define __COREMARK_REENTRANT
+#endif
+
 /* local functions */
 
 list_head *core_list_find(list_head *list, list_data *info);
@@ -61,26 +65,26 @@ list_head *core_list_insert_new(list_head * insert_point,
                                 list_data **datablock,
                                 list_head * memblock_end,
                                 list_data * datablock_end);
-typedef ee_s32 (*list_cmp)(list_data *a, list_data *b, core_results *res);
+typedef ee_s32 (*list_cmp)(list_data *a, list_data *b, core_results *res) __COREMARK_REENTRANT;
 list_head *core_list_mergesort(list_head *   list,
                                list_cmp      cmp,
-                               core_results *res);
+                               core_results *res) __COREMARK_REENTRANT;
 
 ee_s16
-calc_func(ee_s16 *pdata, core_results *res)
+calc_func(ee_s16 *ptr_data, core_results *res)
 {
-    ee_s16 data = *pdata;
+    ee_s16 curr_data = *ptr_data;
     ee_s16 retval;
     ee_u8  optype
-        = (data >> 7)
+        = (curr_data >> 7)
           & 1;  /* bit 7 indicates if the function result has been cached */
     if (optype) /* if cached, use cache */
-        return (data & 0x007f);
+        return (curr_data & 0x007f);
     else
     {                             /* otherwise calculate and cache the result */
-        ee_s16 flag = data & 0x7; /* bits 0-2 is type of function to perform */
+        ee_s16 flag = curr_data & 0x7; /* bits 0-2 is type of function to perform */
         ee_s16 dtype
-            = ((data >> 3)
+            = ((curr_data >> 3)
                & 0xf);       /* bits 3-6 is specific data for the operation */
         dtype |= dtype << 4; /* replicate the lower 4 bits to get an 8b value */
         switch (flag)
@@ -88,7 +92,7 @@ calc_func(ee_s16 *pdata, core_results *res)
             case 0:
                 if (dtype < 0x22) /* set min period for bit corruption */
                     dtype = 0x22;
-                retval = core_bench_state(res->size,
+                retval = core_bench_state(res->datasize,
                                           res->memblock[3],
                                           res->seed1,
                                           res->seed2,
@@ -103,12 +107,12 @@ calc_func(ee_s16 *pdata, core_results *res)
                     res->crcmatrix = retval;
                 break;
             default:
-                retval = data;
+                retval = curr_data;
                 break;
         }
         res->crc = crcu16(retval, res->crc);
         retval &= 0x007f;
-        *pdata = (data & 0xff00) | 0x0080 | retval; /* cache the result */
+        *ptr_data = (curr_data & 0xff00) | 0x0080 | retval; /* cache the result */
         return retval;
     }
 }
@@ -118,7 +122,7 @@ calc_func(ee_s16 *pdata, core_results *res)
         Can be used by mergesort.
 */
 ee_s32
-cmp_complex(list_data *a, list_data *b, core_results *res)
+cmp_complex(list_data *a, list_data *b, core_results *res) __COREMARK_REENTRANT
 {
     ee_s16 val1 = calc_func(&(a->data16), res);
     ee_s16 val2 = calc_func(&(b->data16), res);
@@ -131,7 +135,7 @@ cmp_complex(list_data *a, list_data *b, core_results *res)
         Can be used by mergesort.
 */
 ee_s32
-cmp_idx(list_data *a, list_data *b, core_results *res)
+cmp_idx(list_data *a, list_data *b, core_results *res) __COREMARK_REENTRANT
 {
     if (res == NULL)
     {
@@ -497,7 +501,7 @@ core_list_reverse(list_head *list)
 
  */
 list_head *
-core_list_mergesort(list_head *list, list_cmp cmp, core_results *res)
+core_list_mergesort(list_head *list, list_cmp cmp, core_results *res) __COREMARK_REENTRANT
 {
     list_head *p, *q, *e, *tail;
     ee_s32     insize, nmerges, psize, qsize, i;
