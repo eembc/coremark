@@ -108,7 +108,7 @@ typedef unsigned short ee_u16;
 typedef int32_t        ee_s32;
 typedef float          ee_f32;
 typedef unsigned char  ee_u8;
-typedef unsigned int   ee_u32;
+typedef uint32_t       ee_u32;
 typedef ee_u32         ee_ptr_int;
 typedef size_t         ee_size_t;
 #define NULL ((void *)0)
