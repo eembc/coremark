@@ -174,10 +174,10 @@ main(int argc, char *argv[])
     {
         ee_s32 malloc_override = get_seed(7);
         if (malloc_override != 0)
-            results[i].size = malloc_override;
+            results[i].datasize = malloc_override;
         else
-            results[i].size = TOTAL_DATA_SIZE;
-        results[i].memblock[0] = portable_malloc(results[i].size);
+            results[i].datasize = TOTAL_DATA_SIZE;
+        results[i].memblock[0] = portable_malloc(results[i].datasize);
         results[i].seed1       = results[0].seed1;
         results[i].seed2       = results[0].seed2;
         results[i].seed3       = results[0].seed3;
@@ -188,7 +188,7 @@ main(int argc, char *argv[])
 for (i = 0; i < MULTITHREAD; i++)
 {
     results[i].memblock[0] = stack_memblock + i * TOTAL_DATA_SIZE;
-    results[i].size        = TOTAL_DATA_SIZE;
+    results[i].datasize    = TOTAL_DATA_SIZE;
     results[i].seed1       = results[0].seed1;
     results[i].seed2       = results[0].seed2;
     results[i].seed3       = results[0].seed3;
