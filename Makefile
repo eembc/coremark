@@ -55,6 +55,12 @@ ifdef REBUILD
 FORCE_REBUILD=force_rebuild
 endif
 
+ifdef SEPARATE_COMPILE
+ifndef PORT_OBJS
+$(error PORT_OBJS must be defined when SEPARATE_COMPILE is enabled)
+endif
+endif
+
 CFLAGS += -DITERATIONS=$(ITERATIONS)
 
 CORE_FILES = core_list_join core_main core_matrix core_state core_util
