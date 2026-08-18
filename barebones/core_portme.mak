@@ -45,6 +45,8 @@ ASFLAGS =
 OFLAG 	= -o
 COUT 	= -c
 
+OEXT = .o
+
 LFLAGS_END = 
 # Flag : PORT_SRCS
 # 	Port specific source files can be added here
@@ -52,6 +54,10 @@ LFLAGS_END =
 PORT_SRCS = $(PORT_DIR)/core_portme.c $(PORT_DIR)/ee_printf.c
 vpath %.c $(PORT_DIR)
 vpath %.s $(PORT_DIR)
+
+# PORT_OBJS must be defined when SEPARATE_COMPILE=1
+PORT_OBJS = $(PORT_DIR)/core_portme$(OEXT) \
+            $(PORT_DIR)/ee_printf$(OEXT)
 
 # Flag : LOAD
 #	For a simple port, we assume self hosted compile and run, no load needed.
