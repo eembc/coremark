@@ -2,4 +2,4 @@
 /coremark.*
 !/coremark.md5
 !/coremark.h
-/*.log
+*.log
