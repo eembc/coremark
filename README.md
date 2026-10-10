@@ -33,7 +33,9 @@ In order to run corebench on a zephyr target, start by configuring a zephyr work
 Note that especially the correct installation of the toolchain using its `setup.sh` and the `west zephyr-export` step are important for being able to build coremark. Ideally, run one of the zephyr samples on your board *before trying to run the coremark port* to test that everything was set up properly.
 The port was tested with version 4.4.0 of zephyr, but should work with later versions as well.
 
-In order to build the port, run zephyr's build command *from the top of the coremark directory*:
+In order to build the port, 
+  1) copy the coremark directory (including subdirectories) into your zephyr workplace directory, then
+  2) run zephyr's build command *from the top of the coremark directory*:
 
 ```bash
   west build -p always -b <your board> zephyr/
