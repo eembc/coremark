@@ -25,23 +25,23 @@ For cross compile platforms please adjust `core_portme.mak`, `core_portme.h` (an
 ~~~
 
 ## Zephyr RTOS port
-The [zephyr RTOS](https://zephyrproject.org) is supported as a target for coremark.
-Zephyr being a unikernel operation system, it needs to be built and linked against coremark directly.
+The [zephyr RTOS](https://zephyrproject.org) is supported as a target for CoreMark.
+Zephyr being a unikernel operation system, it needs to be built and linked against CoreMark directly.
 To this end, the zephyr port uses zephyr's CMake build system.
 
-In order to run corebench on a zephyr target, start by configuring a zephyr workplace in accordance with the [zephyr getting started guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
-Note that especially the correct installation of the toolchain using its `setup.sh` and the `west zephyr-export` step are important for being able to build coremark. Ideally, run one of the zephyr samples on your board *before trying to run the coremark port* to test that everything was set up properly.
+In order to run CoreMark on a zephyr target, start by configuring a zephyr workplace in accordance with the [zephyr getting started guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
+Note that especially the correct installation of the toolchain using its `setup.sh` and the `west zephyr-export` step are important for being able to build CoreMark. Ideally, run one of the zephyr samples on your board *before trying to run the CoreMark port* to test that everything was set up properly.
 The port was tested with version 4.4.0 of zephyr, but should work with later versions as well.
 
 In order to build the port, 
-  1) copy the coremark directory (including subdirectories) into your zephyr workplace directory, then
+  1) copy the CoreMark directory (including subdirectories) into your zephyr workplace directory, then
   2) run zephyr's build command *from the top of the coremark directory*:
 
 ```bash
   west build -p always -b <your board> zephyr/
 ```
 
-You can then load and execute zephyr with coremark using, e.g., the *flash* and *debug* commands that come with zephyr's build tool west:
+You can then load and execute zephyr with CoreMark using, e.g., the *flash* and *debug* commands that come with zephyr's build tool west:
 
 ```bash
   west debug # launches into GDB shell, stopped at first instruction
@@ -466,6 +466,6 @@ Many thanks to all of the individuals who helped with the development or testing
 Please refer to LICENSE.md in this repository for a description of your rights to use this code.
 
 # Copyright
-Copyright © 2009 EEMBC All rights reserved. 
-CoreMark is a trademark of EEMBC and EEMBC is a registered trademark of the Embedded Microprocessor Benchmark Consortium.
+Copyright © 2009-2023, Copyright © 2023-2026 SPEC All rights reserved. 
+CoreMark is a trademark of EEMBC and EEMBC is a registered trademark of the Embedded Microprocessor Benchmark Consortium and SPEC.
 
