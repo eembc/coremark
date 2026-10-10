@@ -28,9 +28,24 @@ Original Author: Eric Ackermann
 /************************/
 /* Configuration : HAS_FLOAT
         Define to 1 if the platform supports floating point.
+        Note:
+        If HAS_FLOAT is set to 1, then prj.conf need to have
+        options to enable floating-point printf. For example,
+        when using Zephyr's minimal C library, the following
+        options should be used:
+        CONFIG_CBPRINTF_COMPLETE=y
+        CONFIG_CBPRINTF_FP_SUPPORT=y
 */
 #ifndef HAS_FLOAT
-#define HAS_FLOAT CONFIG_FPU
+#ifdef CONFIG_FPU
+#if CONFIG_FPU == y
+#define HAS_FLOAT 1
+#else
+#define HAS_FLOAT 0
+#endif
+#else
+#define HAS_FLOAT 0
+#endif
 #endif
 /* Configuration : HAS_TIME_H
         Define to 1 if platform has the time.h header file,
