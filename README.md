@@ -29,6 +29,17 @@ The [zephyr RTOS](https://zephyrproject.org) is supported as a target for CoreMa
 Zephyr being a unikernel operation system, it needs to be built and linked against CoreMark directly.
 To this end, the zephyr port uses zephyr's CMake build system.
 
+The port utilizes Zephyr libraries for hardware support. Please see
+the following website for the list of supported development boards:
+https://docs.zephyrproject.org/latest/boards/
+
+Timing functions used in zephyr/core_portme.c (timing_counter_get() and timing_cycles_to_ns())
+are timing functions in Zephyr RTOS. See the following website for details:
+https://docs.zephyrproject.org/latest/kernel/timing_functions/index.html
+
+The DIV_ROUND_UP function is also a part of Zephyr utilities:
+https://docs.zephyrproject.org/latest/doxygen/html/group__sys-util.html
+
 In order to run CoreMark on a zephyr target, start by configuring a zephyr workplace in accordance with the [zephyr getting started guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
 Note that especially the correct installation of the toolchain using its `setup.sh` and the `west zephyr-export` step are important for being able to build CoreMark. Ideally, run one of the zephyr samples on your board *before trying to run the CoreMark port* to test that everything was set up properly.
 The port was tested with version 4.4.0 of zephyr, but should work with later versions as well.
