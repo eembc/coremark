@@ -8,12 +8,16 @@ CoreMark's primary goals are simplicity and providing a method for testing only 
 For a more compute-intensive version of CoreMark that uses larger datasets and execution loops taken from common applications, please check out EEMBC's [CoreMark-PRO](https://www.github.com/eembc/coremark-pro) benchmark, also on GitHub.
 
 # Building and Running
+
+## Linux
 	
 In a typical Linux system, to build and run the benchmark, type 
 
 `> make`
 
 Full results are available in the files `run1.log` and `run2.log`. CoreMark result can be found in `run1.log`.
+
+## Microcontrollers (Bare metal)
 
 For information on using CoreMark with microcontrollers or embedded processor systems without an OS, please see [barebones_porting.md](./barebones_porting.md).
 
@@ -435,6 +439,10 @@ Many thanks to all of the individuals who helped with the development or testing
 * Frank Roscheda, NEC
 * Rob Cosaro, NXP
 * Shumpei Kawasaki, RENESAS
+
+SPEC Embedded Group would also like to thanks to GitHub contributers who provide
+feedback and pull-requests for the maintainence release in 2026.
+
 
 # Code changes Q4-2026
 
