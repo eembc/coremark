@@ -18,7 +18,7 @@ Original Author: Shay Gal-on
 
 /* File: core_main.c
         This file contains the framework to acquire a block of memory, seed
-   initial parameters, tun t he benchmark and report the results.
+   initial parameters, tune the benchmark and report the results.
 */
 #include "coremark.h"
 

@@ -38,11 +38,7 @@ Original Author: Eric Ackermann
 */
 #ifndef HAS_FLOAT
 #ifdef CONFIG_FPU
-#if CONFIG_FPU == y
 #define HAS_FLOAT 1
-#else
-#define HAS_FLOAT 0
-#endif
 #else
 #define HAS_FLOAT 0
 #endif
@@ -99,7 +95,7 @@ typedef uint64_t CORE_TICKS;
 #endif
 
 /* Data Types :
-        To avoid compiler issues, define the data types that need ot be used for
+        To avoid compiler issues, define the data types that need to be used for
    8b, 16b and 32b in <core_portme.h>.
 
         *Imprtant* :
@@ -134,7 +130,7 @@ typedef size_t         ee_size_t;
 #endif
 
 /* Configuration : MEM_METHOD
-        Defines method to get a block of memry.
+        Defines method to get a block of memory.
 
         Valid values :
         MEM_MALLOC - for platforms that implement malloc and have malloc.h.
