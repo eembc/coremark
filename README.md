@@ -1,8 +1,6 @@
 
 # Introduction
 
-**This is a development branch. Please do not use it for production.**
-
 CoreMark's primary goals are simplicity and providing a method for testing only a processor's core features. For more information about EEMBC's comprehensive embedded benchmark suites, please see www.eembc.org.
 
 For a more compute-intensive version of CoreMark that uses larger datasets and execution loops taken from common applications, please check out EEMBC's [CoreMark-PRO](https://www.github.com/eembc/coremark-pro) benchmark, also on GitHub.
@@ -31,7 +29,7 @@ For cross compile platforms please adjust `core_portme.mak`, `core_portme.h` (an
 ## Zephyr RTOS port
 The [zephyr RTOS](https://zephyrproject.org) is supported as a target for CoreMark.
 Zephyr being a unikernel operation system, it needs to be built and linked against CoreMark directly.
-To this end, the zephyr port uses zephyr's CMake build system.
+To this end, the Zephyr port uses zephyr's CMake build system.
 
 The port utilizes Zephyr libraries for hardware support. Please see
 the following website for the list of supported development boards:
@@ -44,12 +42,12 @@ https://docs.zephyrproject.org/latest/kernel/timing_functions/index.html
 The DIV_ROUND_UP function is also a part of Zephyr utilities:
 https://docs.zephyrproject.org/latest/doxygen/html/group__sys-util.html
 
-In order to run CoreMark on a zephyr target, start by configuring a zephyr workplace in accordance with the [zephyr getting started guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
+In order to run CoreMark on a zephyr target, start by configuring a Zephyr workspace in accordance with the [zephyr getting started guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
 Note that especially the correct installation of the toolchain using its `setup.sh` and the `west zephyr-export` step are important for being able to build CoreMark. Ideally, run one of the zephyr samples on your board *before trying to run the CoreMark port* to test that everything was set up properly.
-The port was tested with version 4.4.0 of zephyr, but should work with later versions as well.
+The port was tested with version 4.4.0 of Zephyr, but should work with later versions as well.
 
 In order to build the port, 
-  1) copy the CoreMark directory (including subdirectories) into your zephyr workplace directory, then
+  1) copy the CoreMark directory (including subdirectories) into your Zephyr workspace directory, then
   2) run zephyr's build command *from the top of the coremark directory*:
 
 ```bash
@@ -374,6 +372,13 @@ The actual input must be initialized based on data that cannot be determined at 
 # Validation
 
 This release was tested on the following platforms:
+* x86 PC with Ubuntu Linux (gcc).
+* Raspberry Pi 5 with Raspberry OS (gcc).
+* Arm Cortex-M FPGA prototype (gcc, Arm Compiler 6, LLVM Embedded Toolchain for Arm).
+* STM32 Microcontroller board (Cortex-M based) with Zephyr RTOS and gcc.
+* MIPS/GF ARC Classic and ARC-V with MetaWare compiler.
+
+**Note** The original CoreMark release was tested on the following platforms:
 * x86 cygwin and gcc 3.4 (Quad, dual and single core systems)
 * x86 linux (Ubuntu/Fedora) and gcc (4.2/4.1) (Quad and single core systems)
 * MIPS64 BE linux and gcc 3.4 16 cores system
@@ -388,13 +393,17 @@ This release was tested on the following platforms:
 
 # Memory Analysis
 
+**Note** : The following note is from the original CoreMark release. Included here for reference only.
 Valgrind 3.4.0 used and no errors reported.
 	
 # Balance Analysis
 
+**Note** : The following note is from the original CoreMark release. Included here for reference only.
 Number of instructions executed for each function tested with cachegrind and found balanced with gcc and -O0.
 
 # Statistics
+
+**Note** The following details are from the original CoreMark release. Included here for reference only.
 
 Lines:
 ~~~
@@ -440,18 +449,20 @@ Many thanks to all of the individuals who helped with the development or testing
 * Rob Cosaro, NXP
 * Shumpei Kawasaki, RENESAS
 
-SPEC Embedded Group would also like to thanks to GitHub contributers who provide
-feedback and pull-requests for the maintainence release in 2026.
+SPEC Embedded Group would also like to thanks to GitHub contributors who provide
+feedback and pull-requests for the maintenance release in 2026.
 
 
 # Code changes Q4-2026
 
-See docs/revision_2026q4.md for detail information.
+See docs/revision_2026q4.md for detailed information.
 
 # Legal
 Please refer to LICENSE.md in this repository for a description of your rights to use this code.
 
 # Copyright
 Copyright © 2009-2023, Copyright © 2023-2026 SPEC All rights reserved. 
-CoreMark is a trademark of EEMBC and EEMBC is a registered trademark of the Embedded Microprocessor Benchmark Consortium and SPEC.
+CoreMark is a trademark of SPEC. 
+EEMBC is a registered trademark of the Embedded Microprocessor Benchmark Consortium, which is now a part of SPEC.
+
 

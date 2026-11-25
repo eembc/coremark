@@ -80,7 +80,7 @@ Original Author: Shay Gal-on
 /* Example: Additional settings for Keil C51 Compiler */
 #define __COREMARK_REENTRANT reentrant
 #define MEM_METHOD MEM_STATIC
-#define MEM_STATIC_ATTR xdata
+#define STATIC_MEMBLK_ATTR xdata
 #define HAS_C99 0
 #endif
 
@@ -88,11 +88,11 @@ Original Author: Shay Gal-on
 /* Example: Additional settings for SDCC Compiler */
 #define __COREMARK_REENTRANT __reentrant
 #define MEM_METHOD MEM_STATIC
-#define MEM_STATIC_ATTR __xdata
+#define STATIC_MEMBLK_ATTR __xdata
 #endif
 
 /* Data Types :
-        To avoid compiler issues, define the data types that need ot be used for
+        To avoid compiler issues, define the data types that need to be used for
    8b, 16b and 32b in <core_portme.h>.
 
         *Important* :
@@ -148,7 +148,7 @@ typedef ee_u32 CORE_TICKS;
 #endif
 
 /* Configuration : MEM_METHOD
-        Defines method to get a block of memry.
+        Defines method to get a block of memory.
 
         Valid values :
         MEM_MALLOC - for platforms that implement malloc and have malloc.h.
