@@ -15,7 +15,7 @@ In a typical Linux system, to build and run the benchmark, type
 
 Full results are available in the files `run1.log` and `run2.log`. The CoreMark result can be found in `run1.log`.
 
-## Microcontrollers (Bare metal)
+## Microcontrollers (Bare Metal)
 
 For information on using CoreMark with microcontrollers or embedded processor systems without an OS, please see [barebones_porting.md](./barebones_porting.md).
 
@@ -27,9 +27,9 @@ For cross-compile platforms please adjust `core_portme.mak`, `core_portme.h` (an
 ~~~
 
 ## Zephyr RTOS port
-The [zephyr RTOS](https://zephyrproject.org) is supported as a target for CoreMark.
-Zephyr being a unikernel operation system, it needs to be built and linked against CoreMark directly.
-To this end, the Zephyr port uses zephyr's CMake build system.
+The [Zephyr RTOS](https://zephyrproject.org) is supported as a target for CoreMark.
+As Zephyr is unikernel operation system, it needs to be built and linked against CoreMark directly.
+To this end, the Zephyr port uses Zephyr's CMake build system.
 
 The port utilizes Zephyr libraries for hardware support. Please see
 the following website for the list of supported development boards:
@@ -42,27 +42,27 @@ https://docs.zephyrproject.org/latest/kernel/timing_functions/index.html
 The DIV_ROUND_UP function is also a part of Zephyr utilities:
 https://docs.zephyrproject.org/latest/doxygen/html/group__sys-util.html
 
-In order to run CoreMark on a zephyr target, start by configuring a Zephyr workspace in accordance with the [zephyr getting started guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
-Note that especially the correct installation of the toolchain using its `setup.sh` and the `west zephyr-export` step are important for being able to build CoreMark. Ideally, run one of the zephyr samples on your board *before trying to run the CoreMark port* to test that everything was set up properly.
+In order to run CoreMark on a Zephyr target, start by configuring a Zephyr workspace in accordance with the [Zephyr getting started guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
+Note that especially the correct installation of the toolchain using its `setup.sh` and the `west zephyr-export` step are important for being able to build CoreMark. Ideally, run one of the Zephyr samples on your board *before trying to run the CoreMark port* to test that everything was set up properly.
 The port was tested with version 4.4.0 of Zephyr, but should work with later versions as well.
 
 In order to build the port, 
   1) copy the CoreMark directory (including subdirectories) into your Zephyr workspace directory, then
-  2) run zephyr's build command *from the top of the coremark directory*:
+  2) run Zephyr's build command *from the top of the coremark directory*:
 
 ```bash
   west build -p always -b <your board> zephyr/
 ```
 
-You can then load and execute zephyr with CoreMark using, e.g., the *flash* and *debug* commands that come with zephyr's build tool west:
+You can then load and execute Zephyr with CoreMark using, e.g., the *flash* and *debug* commands that come with Zephyr's build tool `west`:
 
 ```bash
   west debug # launches into GDB shell, stopped at first instruction
   west flash # launches without debugger
 ```
 
-The make flags below except `REBUILD` are supported.
-Be sure to provide the flag `-p` (*pristine*) to `west build` to force a re-build.
+The make flags below, except `REBUILD`, are supported.
+Be sure to provide the flag `-p` (*pristine*) to `west build` to force a rebuild.
 If unsure, delete the *build* directory as well.
 
 ## Make Targets
@@ -130,7 +130,7 @@ Use `XCFLAGS=-DMULTITHREAD=N` where N is the number of threads to run in paralle
 % make XCFLAGS="-DMULTITHREAD=4 -DUSE_PTHREAD -pthread"
 ~~~
 
-The above will compile the benchmark for execution on 4 cores, using POSIX Threads API. Forking is also supported:
+The above will compile the benchmark for execution on 4 threads (usually implies 4 cores, but might not be true for some systems), using POSIX Threads API. Forking is also supported:
 
 ~~~
 % make XCFLAGS="-DMULTITHREAD=4 -DUSE_FORK"
@@ -175,7 +175,7 @@ What is and is not allowed.
 	% make XCFLAGS="-DPERFORMANCE_RUN=1" REBUILD=1 run1.log
 	% make XCFLAGS="-DVALIDATION_RUN=1" REBUILD=1 run2.log
 ~~~
-3. If using profile guided optimization, profile must be generated using seeds of `8,8,8`, and buffer size of 1200 bytes total.
+3. If using profile-guided optimization, profile must be generated using seeds of `8,8,8`, and buffer size of 1200 bytes total.
 ~~~
     % make XCFLAGS="-DTOTAL_DATA_SIZE=1200 -DPROFILE_RUN=1" REBUILD=1 run3.log
 ~~~
@@ -206,7 +206,7 @@ might convert the line endings in coremark.md5 from UNIX line endings to DOS lin
 endings. This could cause the md5sum command to fail.  If this happens, please 
 convert the coremark.md5 to UNIX style text format and retry.
 
-# Reporting rules
+# Reporting Rules
 Use the following syntax to report results on a data sheet:
 
 CoreMark 1.0 : N / C [/ P] [/ M]
@@ -265,7 +265,7 @@ seedcrc				: 0xe9f5				(identifier for the input seeds)
 [0]crcstate			: 0x8e3a				(validation for state part)
 [0]crcfinal			: 0x33ff				(iteration dependent output)
 Correct operation validated. See README.md for run and reporting rules.  (*Only when run is successful*)
-CoreMark 1.0 : 6508.490622 / GCC3.4.4 -O2 / Heap 						  (*Only on a successful performance run*)
+CoreMark 1.0 : 3864.734300 / GCC3.4.4 -O2 / Heap 						  (*Only on a successful performance run*)
 ~~~
 
 # Theory of Operation
@@ -334,7 +334,7 @@ For the benchmark itself:
 - The list will be sorted using merge sort based on the data16 value, and then derive CRC of the data16 item in order for part of the list. The CRC will become part of the output chain.
 - The list will be sorted again using merge sort based on the idx value. This sort will guarantee that the list is returned to the primary state before leaving the function, so that multiple iterations of the function will have the same result. CRC of the data16 for part of the list will again be calculated and become part of the output chain.
 
-The actual `data16` in each cell will be pseudo random based on a single 16b input that cannot be determined at compile time. In addition, the part of the list which is used for CRC will also be passed to the function, and determined based on an input that cannot be determined at run time.
+The actual `data16` in each cell will be pseudo random based on a single 16b input that cannot be determined at compile time. In addition, the part of the list which is used for CRC will also be passed to the function, and determined based on an input that cannot be determined at compile time.
 
 ### Matrix Multiply
 
@@ -378,20 +378,21 @@ The actual input must be initialized based on data that cannot be determined at 
 # Validation
 
 This release was tested on the following platforms:
-* x86 PC with Ubuntu Linux (gcc).
-* Raspberry Pi 5 with Raspberry Pi OS (gcc).
-* Arm Cortex-M FPGA prototype (gcc, Arm Compiler 6, LLVM Embedded Toolchain for Arm).
-* STM32 Microcontroller board (Cortex-M based) with Zephyr RTOS and gcc.
+* x86 PC with Ubuntu Linux (GCC).
+* Raspberry Pi 5 with Raspberry Pi OS (GCC).
+* Arm Cortex-M FPGA prototype (GCC, Arm Compiler 6, LLVM Embedded Toolchain for Arm).
+* STM32 Microcontroller board (Cortex-M based) with Zephyr RTOS and GCC.
 * MIPS/GF ARC Classic and ARC-V with MetaWare compiler.
 * C51 simulator (8051/8052) with Keil C51. 
 
 For MCS51, the following project settings were used:
-- Use large memory model
-- LARGE model reentrant stack enabled (STARTUP.A51: XBPSTACK EQU 1) Reentrant stack top set to 0xFF00 (XBPSTACKTOP EQU 0xFF00)
-- MEM_METHOD set to MEM_STATIC
-(Note: SDCC is not supported because the toolchain does not include prebuilt libraries for external stack configuration(`--xstack`).)
 
-**Note** The original CoreMark release was tested on the following platforms:
+* Use the large memory model
+* Enable the LARGE model reentrant stack (STARTUP.A51: XBPSTACK EQU 1) and set the reentrant stack top to 0xFF00 (XBPSTACKTOP EQU 0xFF00).
+* Set MEM_METHOD to MEM_STATIC
+(Note: SDCC is not supported because the toolchain does not include prebuilt libraries for the external stack configuration(`--xstack`).)
+
+Note: The original CoreMark release was tested on the following platforms:
 * x86 cygwin and gcc 3.4 (Quad, dual and single core systems)
 * x86 linux (Ubuntu/Fedora) and gcc (4.2/4.1) (Quad and single core systems)
 * MIPS64 BE linux and gcc 3.4 16 cores system
@@ -406,17 +407,17 @@ For MCS51, the following project settings were used:
 
 # Memory Analysis
 
-**Note** : The following note is from the original CoreMark release. Included here for reference only.
+Note: The following note is from the original CoreMark release. Included here for reference only.
 Valgrind 3.4.0 used and no errors reported.
 	
 # Balance Analysis
 
-**Note** : The following note is from the original CoreMark release. Included here for reference only.
+Note: The following note is from the original CoreMark release. Included here for reference only.
 Number of instructions executed for each function tested with cachegrind and found balanced with gcc and -O0.
 
 # Statistics
 
-**Note** The following details are from the original CoreMark release. Included here for reference only.
+Note: The following details are from the original CoreMark release. Included here for reference only.
 
 Lines:
 ~~~
@@ -462,19 +463,19 @@ Many thanks to all of the individuals who helped with the development or testing
 * Rob Cosaro, NXP
 * Shumpei Kawasaki, RENESAS
 
-SPEC Embedded Group would also like to thank GitHub contributors who provide
-feedback and pull requests for the maintenance release in 2026.
+The SPEC Embedded Group would also like to thank the GitHub contributors who provided feedback and pull requests for the 2026 maintenance release.
 
+# Code changes (Q4 2026)
 
-# Code changes Q4-2026
-
-See docs/revision_2026q4.md for detailed information.
+See [docs/revision_2026q4.md](./docs/revision_2026q4.md) for detailed information.
 
 # Legal
 Please refer to LICENSE.md in this repository for a description of your rights to use this code.
 
 # Copyright
-Copyright © 2009-2023 EEMBC, Copyright © 2023-2026 SPEC All rights reserved. 
+Copyright © 2009-2023 EEMBC.
+Copyright © 2023-2026 SPEC.
+All rights reserved. 
 CoreMark is a trademark of SPEC. 
 EEMBC is a registered trademark of the Embedded Microprocessor Benchmark Consortium, which is now a part of SPEC.
 
