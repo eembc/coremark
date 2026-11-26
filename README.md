@@ -13,7 +13,7 @@ In a typical Linux system, to build and run the benchmark, type
 
 `> make`
 
-Full results are available in the files `run1.log` and `run2.log`. CoreMark result can be found in `run1.log`.
+Full results are available in the files `run1.log` and `run2.log`. The CoreMark result can be found in `run1.log`.
 
 ## Microcontrollers (Bare metal)
 
@@ -21,7 +21,7 @@ For information on using CoreMark with microcontrollers or embedded processor sy
 
 ## Cross Compiling
 
-For cross compile platforms please adjust `core_portme.mak`, `core_portme.h` (and possibly `core_portme.c`) according to the specific platform used. When porting to a new platform, it is recommended to copy one of the default port folders  (e.g. `mkdir <platform> && cp linux/* <platform>`), adjust the porting files, and run:
+For cross-compile platforms please adjust `core_portme.mak`, `core_portme.h` (and possibly `core_portme.c`) according to the specific platform used. When porting to a new platform, it is recommended to copy one of the default port folders  (e.g. `mkdir <platform> && cp linux/* <platform>`), adjust the porting files, and run:
 ~~~
 % make PORT_DIR=<platform>
 ~~~
@@ -124,7 +124,7 @@ For example:
 The above will compile the benchmark for a performance run and 1000 iterations. Output is redirected to `run1.log`.
 
 # Parallel Execution
-Use `XCFLAGS=-DMULTITHREAD=N` where N is number of threads to run in parallel. Several implementations are available to execute in multiple contexts, or you can implement your own in `core_portme.c`.
+Use `XCFLAGS=-DMULTITHREAD=N` where N is the number of threads to run in parallel. Several implementations are available to execute in multiple contexts, or you can implement your own in `core_portme.c`.
 
 ~~~
 % make XCFLAGS="-DMULTITHREAD=4 -DUSE_PTHREAD -pthread"
@@ -146,7 +146,7 @@ CoreMark's executable takes several parameters as follows (but only if `main()` 
 4th - Number of iterations (0 for auto : default value)
 5th - Reserved for internal use. 
 6th - Reserved for internal use. 
-7th - For malloc users only, ovreride the size of the input data buffer.
+7th - For malloc users only, override the size of the input data buffer.
 
 The run target from make will run coremark with 2 different data initialization seeds.
 
@@ -192,20 +192,26 @@ What is and is not allowed.
 1. Changing number of iterations
 2. Changing toolchain and build/load/run options
 3. Changing method of acquiring a data memory block
-5. Changing the method of acquiring seed values
-6. Changing implementation `in core_portme.c`
-7. Changing configuration values in `core_portme.h`
-8. Changing `core_portme.mak`
+4. Changing the method of acquiring seed values
+5. Changing the implementation `in core_portme.c`
+6. Changing configuration values in `core_portme.h`
+7. Changing `core_portme.mak`
 
 ## NOT ALLOWED
-1. Changing of source file other then `core_portme*` (use `make check` to validate)
+1. Changing source files other than `core_portme*` (use `make check` to validate)
+
+Note: `make check` compares the MD5 checksums of several source code files with the 
+reference values in coremark.md5. In some system environments, the Git software 
+might convert the line endings in coremark.md5 from UNIX line endings to DOS line 
+endings. This could cause the md5sum command to fail.  If this happens, please 
+convert the coremark.md5 to UNIX style text format and retry.
 
 # Reporting rules
 Use the following syntax to report results on a data sheet:
 
 CoreMark 1.0 : N / C [/ P] [/ M]
 
-N - Number of iterations per second with seeds 0,0,0x66,size=2000)
+N - Number of iterations per second with seeds 0,0,0x66 (size=2000)
 
 C - Compiler version and flags
 
@@ -281,19 +287,19 @@ A thin abstraction layer will be provided for I/O and timing in a separate file.
 * Compile with gcc on x86 and make sure all sizes are according to requirements. 
 * If dynamic memory allocation is used, take total memory allocated into account as well. 
 * Avoid recursive functions and keep track of stack usage.
-* Use the same memory block as data site for all algorithms, and initialize the data before each algorithm – while this means that initialization with data happens during the timed portion, it will only happen once during the timed portion and so have negligible effect on the results.
+* Use the same memory block as data space for all algorithms, and initialize the data before each algorithm – while this means that initialization with data happens during the timed portion, it will only happen once during the timed portion and so have negligible effect on the results.
 
 ## Controlled output
 
 This may be the most difficult goal. Compilers are constantly improving and getting better at analyzing code. To create work that cannot be computed at compile time and must be computed at run time, we will rely on two assumptions:
 
-* Some system functions (e.g. time, scanf) and parameters cannot be computed at compile time.  In most cases, marking a variable volatile means the compiler is force to read this variable every time it is read. This will be used to introduce a factor into the input that cannot be precomputed at compile time. Since the results are input dependent, that will make sure that computation has to happen at run time.
+* Some system functions (e.g. time, scanf) and parameters cannot be computed at compile time.  In most cases, marking a variable volatile means the compiler is forced to read this variable every time it is read. This will be used to introduce a factor into the input that cannot be precomputed at compile time. Since the results are input dependent, that will make sure that computation has to happen at run time.
 
-* Either a system function or I/O (e.g. scanf) or command line parameters or volatile variables will be used before the timed portion to generate data which is not available at compile time. Specific method used is not relevant as long as it can be controlled, and that it cannot be computed or eliminated by the compiler at compile time. E.g. if the clock() functions is a compiler stub, it may not be used. The derived values will be reported on the output so that verification can be done on a different machine. 
+* Either a system function or I/O (e.g. scanf) or command line parameters or volatile variables will be used before the timed portion to generate data which is not available at compile time. Specific method used is not relevant as long as it can be controlled, and that it cannot be computed or eliminated by the compiler at compile time. E.g. if the clock() function is a compiler stub, it may not be used. The derived values will be reported on the output so that verification can be done on a different machine. 
 
 * We cannot rely on command line parameters since some embedded systems do not have the capability to provide command line parameters. All 3 methods above will be implemented (time based, scanf and command line parameters) and all 3 are valid if the compiler cannot determine the value at compile time. 
 
-* It is important to note that The actual values that are to be supplied at run time will be standardized. The methodology is not intended to provide random data, but simply to provide controlled data that cannot be precomputed at compile time.
+* It is important to note that the actual values that are to be supplied at run time will be standardized. The methodology is not intended to provide random data, but simply to provide controlled data that cannot be precomputed at compile time.
 
 * Printed results must be valid at run time. This will be used to make sure the computation has been executed.
 
@@ -319,9 +325,9 @@ typedef struct list_head_s {
 
 While adding a level of indirection accessing the data, this structure is realistic and used in many embedded applications for small to medium lists.
 
-The list itself will be initialized on a block of memory that will be passed in to the initialization function. While in general linked lists use malloc for new nodes, embedded applications sometime control the memory for small data structures such as arrays and lists directly to avoid the overhead of system calls, so this approach is realistic.
+The list itself will be initialized on a block of memory that will be passed in to the initialization function. While in general linked lists use malloc for new nodes, embedded applications sometimes control the memory for small data structures such as arrays and lists directly to avoid the overhead of system calls, so this approach is realistic.
 
-The linked list will be initialized such that 1/4 of the list pointers point to sequential areas in memory, and 3/4 of the list pointers are distributed in a non sequential manner. This is done to emulate a linked list that had add/remove happen for a while disrupting the neat order, and then a series of adds that are likely to come from sequential memory locations.
+The linked list will be initialized such that 1/4 of the list pointers point to sequential areas in memory, and 3/4 of the list pointers are distributed in a non-sequential manner. This is done to emulate a linked list that had add/remove happen for a while disrupting the neat order, and then a series of adds that are likely to come from sequential memory locations.
 
 For the benchmark itself:
 - Multiple find operations are going to be performed. These find operations may result in the whole list being traversed. The result of each find will become part of the output chain.
@@ -334,7 +340,7 @@ The actual `data16` in each cell will be pseudo random based on a single 16b inp
 
 This very simple algorithm forms the basis of many more complex algorithms. The tight inner loop is the focus of many optimizations (compiler as well as hardware based) and is thus relevant for embedded processing. 
 
-The total available data space will be divided to 3 parts:
+The total available data space will be divided into 3 parts:
 1. NxN matrix A.
 2. NxN matrix B.
 3. NxN matrix C.
@@ -346,9 +352,9 @@ Matrix B will be initialized with medium values (upper half of the bits all zero
 Matrix C will be used for the result.
 
 For the benchmark itself:
-- Multiple A by a constant into C, add the upper bits of each of the values in the result matrix. The result will become part of the output chain.
-- Multiple A by column X of B into C, add the upper bits of each of the values in the result matrix. The result will become part of the output chain.
-- Multiple A by B into C, add the upper bits of each of the values in the result matrix. The result will become part of the output chain.
+- Multiply A by a constant into C, add the upper bits of each of the values in the result matrix. The result will become part of the output chain.
+- Multiply A by column X of B into C, add the upper bits of each of the values in the result matrix. The result will become part of the output chain.
+- Multiply A by B into C, add the upper bits of each of the values in the result matrix. The result will become part of the output chain.
 
 The actual values for A and B must be derived based on input that is not available at compile time.
 
@@ -358,7 +364,7 @@ This part of the code needs to exercise switch and if statements. As such, we wi
 
 The state machine will parse the input string until either a “,” separator or end of input is encountered. An invalid number will cause the state machine to return invalid state and a valid number will cause the state machine to return with type of number format (int/float/scientific).
 
-This code will perform a realistic task, be small enough to easily understand, and exercise the required functionality. The other option used in embedded systems is a mealy based state machine, which is driven by a table. The table then determines the number of states and complexity of transitions. This approach, however, tests mainly the load/store and function call mechanisms and less the handling of branches. If analysis of the final results shows that the load/store functionality of the processor is not exercised thoroughly, it may be a good addition to the benchmark (codesize allowing).
+This code will perform a realistic task, be small enough to easily understand, and exercise the required functionality. The other option used in embedded systems is a Mealy-based state machine, which is driven by a table. The table then determines the number of states and complexity of transitions. This approach, however, tests mainly the load/store and function call mechanisms and less the handling of branches. If analysis of the final results shows that the load/store functionality of the processor is not exercised thoroughly, it may be a good addition to the benchmark (code size permitting).
 
 For input, the memory block will be initialized with comma separated values of mixed formats, as well as invalid inputs.
 
@@ -373,10 +379,17 @@ The actual input must be initialized based on data that cannot be determined at 
 
 This release was tested on the following platforms:
 * x86 PC with Ubuntu Linux (gcc).
-* Raspberry Pi 5 with Raspberry OS (gcc).
+* Raspberry Pi 5 with Raspberry Pi OS (gcc).
 * Arm Cortex-M FPGA prototype (gcc, Arm Compiler 6, LLVM Embedded Toolchain for Arm).
 * STM32 Microcontroller board (Cortex-M based) with Zephyr RTOS and gcc.
 * MIPS/GF ARC Classic and ARC-V with MetaWare compiler.
+* C51 simulator (8051/8052) with Keil C51. 
+
+For MCS51, the following project settings were used:
+- Use large memory model
+- LARGE model reentrant stack enabled (STARTUP.A51: XBPSTACK EQU 1) Reentrant stack top set to 0xFF00 (XBPSTACKTOP EQU 0xFF00)
+- MEM_METHOD set to MEM_STATIC
+(Note: SDCC is not supported because the toolchain does not include prebuilt libraries for external stack configuration(`--xstack`).)
 
 **Note** The original CoreMark release was tested on the following platforms:
 * x86 cygwin and gcc 3.4 (Quad, dual and single core systems)
@@ -449,8 +462,8 @@ Many thanks to all of the individuals who helped with the development or testing
 * Rob Cosaro, NXP
 * Shumpei Kawasaki, RENESAS
 
-SPEC Embedded Group would also like to thanks to GitHub contributors who provide
-feedback and pull-requests for the maintenance release in 2026.
+SPEC Embedded Group would also like to thank GitHub contributors who provide
+feedback and pull requests for the maintenance release in 2026.
 
 
 # Code changes Q4-2026
@@ -461,7 +474,7 @@ See docs/revision_2026q4.md for detailed information.
 Please refer to LICENSE.md in this repository for a description of your rights to use this code.
 
 # Copyright
-Copyright © 2009-2023, Copyright © 2023-2026 SPEC All rights reserved. 
+Copyright © 2009-2023 EEMBC, Copyright © 2023-2026 SPEC All rights reserved. 
 CoreMark is a trademark of SPEC. 
 EEMBC is a registered trademark of the Embedded Microprocessor Benchmark Consortium, which is now a part of SPEC.
 
